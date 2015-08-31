@@ -49,23 +49,28 @@ public class PairingPlugAdapter extends ArrayAdapter<SmartPlug> implements Swapp
 		context = context2;
 		this.plugList = plugList;
 	}
-	public PairingPlugAdapter(Activity context, ArrayList<SmartPlug> plugList) 
+	public PairingPlugAdapter(Context context, ArrayList<SmartPlug> plugList) 
 	{
 		super(context, R.layout.list_item_default, plugList); 
-		this.context=context;
+		mContext=context;
+		mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.plugList=plugList;
 	}
 
+	
+	
+	
+	@Override
 	public View getView(final int position, View convertView, ViewGroup parent)
 	{
-		ViewHolder viewHolder;
+		final ViewHolder viewHolder;
 		if (convertView == null) {
-			LayoutInflater inflater = LayoutInflater.from(context);  
-            convertView = inflater.inflate(R.layout.list_item_default, null);  
+			convertView = mInflater.inflate(R.layout.list_item_default, parent, false);
             viewHolder = new ViewHolder();			
             viewHolder.plugID = (TextView) convertView.findViewById(R.id.plugID);
             viewHolder.plugName = (TextView) convertView.findViewById(R.id.plugName);
-            viewHolder.plugDecsr = (TextView) convertView.findViewById(R.id.plugDecsr);
+            viewHolder.plugDecsr = (TextView) convertView.findViewById(R.id.plugDescription);
+            viewHolder.icon = (TextView) convertView.findViewById(R.id.icon);
             convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -76,19 +81,19 @@ public class PairingPlugAdapter extends ArrayAdapter<SmartPlug> implements Swapp
 			if(plug != null) {
 				viewHolder.plugID.setText(plug.getDeviceID());
 				viewHolder.plugName.setText(plug.getDeviceName());
-				viewHolder.plugDecsr.setText(plug.getDescription());				
+				viewHolder.plugDecsr.setText(plug.getDescription());
+				viewHolder.icon.setText(R.string.fontello_heart_empty);
 			}
 		}
 		// xong do data
 		return convertView;
 	}
 
-    public class ViewHolder {  
+    public static class ViewHolder {  
 		public /*Roboto*/TextView plugID;
 		public /*Roboto*/TextView plugName;
 		public /*Roboto*/TextView plugDecsr;
 		public /*Roboto*/TextView plugStatus;
-		
 		public /*Fontello*/TextView icon;
     }
     

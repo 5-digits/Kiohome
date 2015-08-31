@@ -12,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.BaseAdapter;
 import android.widget.Toast;
-
 import com.csform.android.uiapptemplate.adapter.DefaultAdapter;
 import com.csform.android.uiapptemplate.util.DummyContent;
+import com.helper.dataAdapter.PairingPlugAdapter;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.ScaleInAnimationAdapter;
@@ -123,8 +122,9 @@ public class ListViewsActivity extends ActionBarActivity {
 	}
 
 	private void appearanceAnimate(int key) {
-		BaseAdapter adapter = new DefaultAdapter(this,
-				DummyContent.getDummyModelList(), false);
+//		BaseAdapter adapter = new DefaultAdapter(this,
+//				DummyContent.getDummyModelList(), false);
+		PairingPlugAdapter adapter = new PairingPlugAdapter(this, DummyContent.getDummyPlugs());
 		AnimationAdapter animAdapter;
 		switch (key) {
 		default:

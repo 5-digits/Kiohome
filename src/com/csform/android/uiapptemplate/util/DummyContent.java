@@ -2,12 +2,10 @@ package com.csform.android.uiapptemplate.util;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.csform.android.uiapptemplate.R;
 import com.csform.android.uiapptemplate.model.DummyModel;
 import com.csform.android.uiapptemplate.model.ImageGalleryCategoryModel;
 import com.csform.android.uiapptemplate.model.ImageGallerySubcategoryModel;
-import com.devices.BasedDevice;
 import com.devices.SmartPlug;
 
 public class DummyContent {
@@ -815,7 +813,46 @@ public class DummyContent {
 	public static ArrayList<SmartPlug> getDummyPlugs()
 	{
 		ArrayList<SmartPlug> list= new ArrayList<>();
-		list.add(new SmartPlug("t1","ABC","A1B2","test"));
+		SmartPlug p1 = new SmartPlug();
+		p1.setDeviceID("Fuck");
+		p1.setDeviceName("This");
+		p1.setDescription("Shit");
+		p1.setDeviceMac_addr("Damnnn");
+		p1.setStatus(true);
+		
+		SmartPlug p2 = new SmartPlug();
+		p2.setDeviceID("Fuck2");
+		p2.setDeviceName("This");
+		p2.setDescription("Shit");
+		p2.setDeviceMac_addr("Damnnn");
+		p2.setStatus(true);
+		
+		SmartPlug p3 = new SmartPlug();
+		p3.setDeviceID("Fuck3");
+		p3.setDeviceName("This");
+		p3.setDescription("Shit");
+		p3.setDeviceMac_addr("Damnnn");
+		p3.setStatus(true);
+		
+		SmartPlug p4 = new SmartPlug();
+		p4.setDeviceID("Fuck4");
+		p4.setDeviceName("This");
+		p4.setDescription("Shit");
+		p4.setDeviceMac_addr("Damnnn");
+		p4.setStatus(true);
+		
+//		list.add(new SmartPlug("t1","ABC","A1B2","test"));
+//		list.add(new SmartPlug("t2","ABC","A1B2q","test"));
+//		list.add(new SmartPlug("t3","ABC","A1B2c","test"));
+//		list.add(new SmartPlug("t4","ABC","A1B2e","test"));
+//		list.add(new SmartPlug("t5","ABC","A1B2","test"));
+//		list.add(new SmartPlug("t6","ABC","A1B2","test"));
+		
+		list.add(p1);
+		list.add(p2);
+		list.add(p3);
+		list.add(p4);
+		
 		return list;
 	}
 	public static ArrayList<DummyModel> getDummyModelSwipeToDissmissTravelList() {

@@ -101,42 +101,6 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}
 
-//	private void prepareNavigationDrawerItems() {
-//		mDrawerItems = new ArrayList<>();
-//				R.string.drawer_title_list_views,
-//				DrawerItem.DRAWER_ITEM_TAG_LIST_VIEWS));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_parallax,
-//				R.string.drawer_title_parallax,
-//				DrawerItem.DRAWER_ITEM_TAG_PARALLAX));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_left_menus,
-//				R.string.drawer_title_left_menus,
-//				DrawerItem.DRAWER_ITEM_TAG_LEFT_MENUS));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_login_page,
-//				R.string.drawer_title_login_page,
-//				DrawerItem.DRAWER_ITEM_TAG_LOGIN_PAGE_AND_LOADERS));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_image_gallery,
-//				R.string.drawer_title_image_gallery,
-//				DrawerItem.DRAWER_ITEM_TAG_IMAGE_GALLERY));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_shape_image_views,
-//				R.string.drawer_title_shape_image_views,
-//				DrawerItem.DRAWER_ITEM_TAG_SHAPE_IMAGE_VIEWS));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_progress_bars,
-//				R.string.drawer_title_progress_bars,
-//				DrawerItem.DRAWER_ITEM_TAG_PROGRESS_BARS));
-//		mDrawerItems.add(new DrawerItem(
-//				R.string.drawer_icon_check_and_radio_buttons,
-//				R.string.drawer_title_check_and_radio_buttons,
-//				DrawerItem.DRAWER_ITEM_TAG_CHECK_AND_RADIO_BOXES));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_splash_screens,
-//				R.string.drawer_title_splash_screens,
-//				DrawerItem.DRAWER_ITEM_TAG_SPLASH_SCREENS));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_search_bars,
-//				R.string.drawer_title_search_bars,
-//				DrawerItem.DRAWER_ITEM_TAG_SEARCH_BARS));
-//		mDrawerItems.add(new DrawerItem(R.string.drawer_icon_text_views,
-//				R.string.drawer_title_text_views,
-//				DrawerItem.DRAWER_ITEM_TAG_TEXT_VIEWS));
-//	}
 	
 	private void prepareNavigationDrawerItems() {
 		mDrawerItems = new ArrayList<>();

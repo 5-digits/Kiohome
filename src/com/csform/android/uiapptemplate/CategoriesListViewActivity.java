@@ -18,14 +18,10 @@ import com.csform.android.uiapptemplate.adapter.SubcategoryAdapter;
 public class CategoriesListViewActivity extends ActionBarActivity implements
 		OnItemClickListener {
 
-	public static final String LIST_VIEW_CATEGORY_EXPANDABLES = "com.csform.android.uiapptemplate.Expandables";
-	public static final String LIST_VIEW_CATEGORY_DRAG_AND_DROP = "com.csform.android.uiapptemplate.DragAndDrop";
-	public static final String LIST_VIEW_CATEGORY_SWIPE_TO_DISSMISS = "com.csform.android.uiapptemplate.SwipeToDissmiss";
-	public static final String LIST_VIEW_CATEGORY_APPEARANCE_ANIMATIONS = "com.csform.android.uiapptemplate.AppearanceAnimations";
-	public static final String LIST_VIEW_CATEGORY_STICKY_HEADER = "com.csform.android.uiapptemplate.StickyHeader";
-	public static final String LIST_VIEW_CATEGORY_GOOGLE_CARDS = "com.csform.android.uiapptemplate.GoogleCards";
+	
 	public static final String LIST_VIEW_CATEGORY_SCAN = "com.csform.android.uiapptemplate.Scan";
-
+	public static final String LIST_VIEW_CATEGORY_PAIR = "com.csform.android.uiapptemplate.Pair";
+	public static final String LIST_VIEW_CATEGORY_OPTION = "com.csform.android.uiapptemplate.Option";
 	public static final String APPEARANCE_ANIMATIONS_LIST_VIEW = "Appearance animations";
 
 	public static final String LIST_VIEW_TRAVEL = "Travel";
@@ -38,7 +34,7 @@ public class CategoriesListViewActivity extends ActionBarActivity implements
 	
 	public static final String LIST_VIEW_OPTION_SCAN = "Scan Plugs Devices";
 	public static final String LIST_VIEW_OPTION_PAIREDPLUG = "Paired Plugs";
-	public static final String LIST_VIEW_OPTION_OPTION = "Option";
+	public static final String LIST_VIEW_OPTION_OPTION = "Options";
 	
 	public static final String LIST_VIEW_OPTION_DRAG_AND_DROP = "Drag&Drop";
 	public static final String LIST_VIEW_OPTION_SWIPE_TO_DISSMISS = "Swipe-to-dissmiss";
@@ -76,68 +72,33 @@ public class CategoriesListViewActivity extends ActionBarActivity implements
 				// category hien gio = "Scan Plugs Devices"
 			}
 		// end Scan option
-			
+		
+			// Pair Option
 		}else if (extras != null
-				&& extras.containsKey(LIST_VIEW_CATEGORY_EXPANDABLES)) {
+				&& extras.containsKey(LIST_VIEW_CATEGORY_PAIR)) {
+			
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-				category = extras.getString(LIST_VIEW_CATEGORY_EXPANDABLES,
+				category = extras.getString(LIST_VIEW_CATEGORY_PAIR,
 						LIST_VIEW_UNIVERSAL);
 			} else {
-				category = extras.getString(LIST_VIEW_CATEGORY_EXPANDABLES);
+				category = extras.getString(LIST_VIEW_CATEGORY_PAIR);
+				// category hien gio = "Paired Plugs"
 			}
+		// end Pair option
 			
 		} else if (extras != null
-				&& extras.containsKey(LIST_VIEW_CATEGORY_DRAG_AND_DROP)) {
+				&& extras.containsKey(LIST_VIEW_CATEGORY_OPTION)) {
+			
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-				category = extras.getString(LIST_VIEW_CATEGORY_DRAG_AND_DROP,
+				category = extras.getString(LIST_VIEW_CATEGORY_OPTION,
 						LIST_VIEW_UNIVERSAL);
 			} else {
-				category = extras.getString(LIST_VIEW_CATEGORY_DRAG_AND_DROP);
+				category = extras.getString(LIST_VIEW_CATEGORY_OPTION);
+				// category hien gio = "Options"
 			}
+		// end Pair option
 			
-		} else if (extras != null
-				&& extras.containsKey(LIST_VIEW_CATEGORY_SWIPE_TO_DISSMISS)) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-				category = extras.getString(
-						LIST_VIEW_CATEGORY_SWIPE_TO_DISSMISS,
-						LIST_VIEW_UNIVERSAL);
-			} else {
-				category = extras
-						.getString(LIST_VIEW_CATEGORY_SWIPE_TO_DISSMISS);
-			}
-			
-		} else if (extras != null
-				&& extras.containsKey(LIST_VIEW_CATEGORY_APPEARANCE_ANIMATIONS)) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-				category = extras.getString(
-						LIST_VIEW_CATEGORY_APPEARANCE_ANIMATIONS,
-						LIST_VIEW_UNIVERSAL);
-			} else {
-				category = extras
-						.getString(LIST_VIEW_CATEGORY_APPEARANCE_ANIMATIONS);
-			}
-			
-		} else if (extras != null
-				&& extras.containsKey(LIST_VIEW_CATEGORY_STICKY_HEADER)) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
-				category = extras.getString(LIST_VIEW_CATEGORY_STICKY_HEADER,
-						LIST_VIEW_UNIVERSAL);
-			} else {
-				category = extras.getString(LIST_VIEW_CATEGORY_STICKY_HEADER);
-			}
-			
-		} else if (extras != null
-				&& extras.containsKey(LIST_VIEW_CATEGORY_GOOGLE_CARDS)) 
-		{
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) 
-			{
-				category = extras.getString(LIST_VIEW_CATEGORY_GOOGLE_CARDS,
-						LIST_VIEW_UNIVERSAL);
-			} else 
-			{
-				category = extras.getString(LIST_VIEW_CATEGORY_GOOGLE_CARDS);
-			}
-		}
+		} 
 		// Trả ra category
 		
 		//Test scan option

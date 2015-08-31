@@ -8,7 +8,6 @@ public class SmartPlug extends BasedDevice{
 	private static final long serialVersionUID = 1L;
 	boolean status;
 	int numberOfPlug;
-	
 	public SmartPlug() {
 		super();
 	}
