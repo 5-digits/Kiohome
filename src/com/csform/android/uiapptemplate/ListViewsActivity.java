@@ -1,8 +1,16 @@
 package com.csform.android.uiapptemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +23,12 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Toast;
 import com.csform.android.uiapptemplate.adapter.DefaultAdapter;
 import com.csform.android.uiapptemplate.util.DummyContent;
+import com.devices.SmartPlug;
 import com.helper.dataAdapter.PairingPlugAdapter;
+import com.helper.dataAdapter.PairingPlugAdapter.customButtonListener;
+import com.helperClass.Constants;
+import com.helperClass.HTTPHelper;
+import com.helperClass.Utilities;
 import com.nhaarman.listviewanimations.appearance.AnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.nhaarman.listviewanimations.appearance.simple.ScaleInAnimationAdapter;
@@ -27,12 +40,15 @@ import com.nhaarman.listviewanimations.itemmanipulation.dragdrop.TouchViewDragga
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.undo.SimpleSwipeUndoAdapter;
 
-public class ListViewsActivity extends ActionBarActivity {
+public class ListViewsActivity extends ActionBarActivity implements customButtonListener {
 
 	public static final String LIST_VIEW_OPTION = "com.csform.android.uiapptemplate.ListViewsActivity";
-
+	
+	ArrayList<SmartPlug> deviceList = new ArrayList<SmartPlug>();
 	private DynamicListView mDynamicListView;
-
+	private ProgressDialog pDialog;
+	HTTPHelper httpHelper = new HTTPHelper();
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +96,8 @@ public class ListViewsActivity extends ActionBarActivity {
 			appearanceAnimate(0);
 		} else if (category
 				.equals(CategoriesListViewActivity.LIST_VIEW_OPTION_APPERANCE_RANDOM)) {
-			appearanceAnimate(new Random().nextInt(5));
+			//appearanceAnimate(new Random().nextInt(5));
+			new AttempScan().execute();
 		}
 	}
 
@@ -121,30 +138,119 @@ public class ListViewsActivity extends ActionBarActivity {
 		mDynamicListView.enableSimpleSwipeUndo();
 	}
 
+	// Setup random Animation for SCAN
 	private void appearanceAnimate(int key) {
-//		BaseAdapter adapter = new DefaultAdapter(this,
-//				DummyContent.getDummyModelList(), false);
-		PairingPlugAdapter adapter = new PairingPlugAdapter(this, DummyContent.getDummyPlugs());
-		AnimationAdapter animAdapter;
-		switch (key) {
-		default:
-		case 0:
-			animAdapter = new AlphaInAnimationAdapter(adapter);
-			break;
-		case 1:
-			animAdapter = new ScaleInAnimationAdapter(adapter);
-			break;
-		case 2:
-			animAdapter = new SwingBottomInAnimationAdapter(adapter);
-			break;
-		case 3:
-			animAdapter = new SwingLeftInAnimationAdapter(adapter);
-			break;
-		case 4:
-			animAdapter = new SwingRightInAnimationAdapter(adapter);
-			break;
+		if(deviceList!= null)
+		{
+			PairingPlugAdapter adapter = new PairingPlugAdapter(this,deviceList);
+			AnimationAdapter animAdapter;
+			switch (key) {
+			default:
+			case 0:
+				animAdapter = new AlphaInAnimationAdapter(adapter);
+				break;
+			case 1:
+				animAdapter = new ScaleInAnimationAdapter(adapter);
+				break;
+			case 2:
+				animAdapter = new SwingBottomInAnimationAdapter(adapter);
+				break;
+			case 3:
+				animAdapter = new SwingLeftInAnimationAdapter(adapter);
+				break;
+			case 4:
+				animAdapter = new SwingRightInAnimationAdapter(adapter);
+				break;
+			}
+			animAdapter.setAbsListView(mDynamicListView);
+			mDynamicListView.setAdapter(animAdapter);
+		}else
+			Utilities.displayToastShort(this, "There's nothing to display");
+
+	}
+	
+	public void scanDeviceListFromJson(JSONObject json){
+		if (json == null) {
+           
+        }else
+        {
+	        try {
+	            JSONArray scanDeviceList = json.getJSONArray(Constants.TAG_SCAN_DEV_LIST);
+	            for (int i = 0; i < scanDeviceList.length(); i++) {
+	            	
+	                JSONObject dev = scanDeviceList.getJSONObject(i);
+	                String dev_id = dev.getString(Constants.TAG_DEV_ID);
+	                String dev_name = dev.getString(Constants.TAG_DEV_NAME);
+	                String dev_type = dev.getString(Constants.TAG_DEV_TYPE);
+	                String dev_mac_addr =  dev.getString(Constants.TAG_DEV_MAC_ADDR);
+	                if(dev_type.equalsIgnoreCase("PLUG"))
+	                {
+	                	SmartPlug plug = new SmartPlug();
+		                plug.setDeviceID(dev_id);
+		                plug.setDeviceName(dev_name);
+		                plug.setDescription("Test");
+		                plug.setDeviceMac_addr(dev_mac_addr);
+		                deviceList.add(plug);
+	                }
+
+	            }
+	        } catch (JSONException e) {
+	            e.printStackTrace();
+	        }
+        }
+		
+	}
+	
+	//AsynsTask for Scan Button
+	class AttempScan extends AsyncTask<String, String, String>
+	{
+		boolean failure = false;
+		
+		@Override
+		protected void onPreExecute()
+		{
+			super.onPreExecute();
+			deviceList.clear();
+			pDialog = Utilities.createAlertDialog(ListViewsActivity.this, "SCANNING DEVICES...", true);
+			pDialog.show();
 		}
-		animAdapter.setAbsListView(mDynamicListView);
-		mDynamicListView.setAdapter(animAdapter);
+		
+		
+		@Override
+		protected String doInBackground(String... args) {
+			
+			try
+			{
+
+				//Building Username and password
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair(Constants.CMD_TYPE, Constants.CMD_SCAN));
+
+				//getting result by making HTTP request
+				JSONObject json = httpHelper.makeHttpRequest(Constants.SCAN_URL,"POST",params);
+				scanDeviceListFromJson(json);
+				
+			
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+
+			}
+			return null;
+		}
+		
+		protected void onPostExecute(String file_url)
+		{
+			pDialog.dismiss();
+			appearanceAnimate(new Random().nextInt(5));
+			
+		}
+		
+	}
+
+	@Override
+	public void onButtonClickListner(int position, SmartPlug dev) {
+	
+		
 	}
 }

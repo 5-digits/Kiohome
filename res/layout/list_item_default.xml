@@ -58,6 +58,7 @@
         android:layout_marginEnd="16dp"
         android:padding="8dp"
         android:textColor="@color/main_color_grey_700"
+        android:clickable="true"
         android:textSize="20dp" />
 
 </LinearLayout>
